@@ -2,17 +2,20 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileText, User, Search, Trash2 } from 'lucide-react';
+import { FileText, User, Search, Trash2, Plus } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import type { Post } from '@/types';
 
 import { postApi, userApi } from '@/lib/api';
+import Modal from '@/components/Modal';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function PostsPage() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const queryClient = useQueryClient();
 
   const { data: posts = [], isLoading: postsLoading, isError: postsError, error: postsErrorMessage } = useQuery({
@@ -136,6 +139,13 @@ export default function PostsPage() {
                     </option>
                   ))}
                 </select>
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all"
+                >
+                  <Plus size={20} className="mr-2" />
+                  Add Post
+                </button>
               </div>
 
               <div className="flex gap-4 text-sm text-gray-600">
@@ -213,6 +223,11 @@ export default function PostsPage() {
           </p>
         </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Add New Post"
+      />
     </div>
   );
 }

@@ -1,15 +1,7 @@
-'use client';
-
 import Link from 'next/link';
-import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { ChevronRight, Code, Database, Globe, Zap } from 'lucide-react';
 
-import Modal from '@/components/Modal';
-
 export default function Home() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const features = [
     {
       icon: Code,
@@ -70,41 +62,23 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <div className="container mx-auto px-6 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
             Next.js 4renders App
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
             A comprehensive demo of Next.js capabilities, including various rendering methods, API integration, modern UI components, and communication in no time.
           </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsModalOpen(true)}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center mx-auto cursor-pointer"
-          >
-            Try Modal
-            <ChevronRight className="ml-2" size={20} />
-          </motion.button>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
-        >
-          {features.map((feature, index) => (
-            <motion.div
+          <div className="mt-4 inline-block bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold">
+            📄 SSG - Static Site Generation
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {features.map((feature) => (
+            <div
               key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 * index }}
-              className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-200 border border-gray-100"
+              className="bg-white rounded-xl p-6 shadow-lg border border-gray-100"
             >
               <feature.icon className="text-blue-600 mb-4" size={32} />
               <h3 className="text-lg font-semibold text-gray-800 mb-2">
@@ -113,65 +87,46 @@ export default function Home() {
               <p className="text-gray-600 text-sm">
                 {feature.description}
               </p>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100"
-        >
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
             Next.js Renders + WebSocket demo
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-            {renderingMethods.map((method, index) => (
+            {renderingMethods.map((method) => (
               <Link
                 key={method.type}
                 href={method.link}
                 className="flex"
               >
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: 0.1 * index }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <div
                   className={`p-6 rounded-xl border-2 transition-all duration-200 cursor-pointer ${method.active
-                    ? 'border-blue-500 bg-blue-50 hover:bg-blue-100'
-                    : 'border-gray-200 bg-gray-50 hover:border-blue-300 hover:bg-blue-50'
+                      ? 'border-blue-500 bg-blue-50'
+                      : 'border-gray-200 bg-gray-50 hover:border-blue-300 hover:bg-blue-50'
                     }`}
                 >
-                  <div className={`text-xs font-bold px-3 py-1 rounded-full inline-block mb-3 ${method.active
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-600 text-white'
-                    }`}>
+                  <div
+                    className={`text-xs font-bold px-3 py-1 rounded-full inline-block mb-3 ${method.active ? 'bg-blue-600 text-white' : 'bg-gray-600 text-white'
+                      }`}
+                  >
                     {method.type}
                   </div>
-                  <h3 className="font-semibold text-gray-800 mb-2">
-                    {method.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-3">
-                    {method.description}
-                  </p>
+                  <h3 className="font-semibold text-gray-800 mb-2">{method.title}</h3>
+                  <p className="text-sm text-gray-600 mb-3">{method.description}</p>
                   <div className="flex items-center text-blue-600 text-sm font-medium">
                     Go to page
                     <ChevronRight size={16} className="ml-1" />
                   </div>
-                </motion.div>
+                </div>
               </Link>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white text-center"
-        >
+        <div className="mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white text-center">
           <h3 className="text-2xl font-bold mb-4">
             🚀 This page using Static Site Generation (SSG)
           </h3>
@@ -179,14 +134,8 @@ export default function Home() {
             Content is pre-rendered during the build, ensuring excellent performance and SEO.
             Navigate the app to see the various rendering methods in action!
           </p>
-        </motion.div>
+        </div>
       </div>
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Form submission demo"
-      />
     </div>
   );
 }
